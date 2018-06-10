@@ -1,0 +1,27 @@
+﻿<div class="row">
+    <p><br /></p>
+
+   
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink(
+                 "Moje wydarzenia",
+                 "MyEvents",
+                 "Events",
+                 /*new { type = "idea" }*/null,
+                 new
+                 {
+                     @class = "btn btn-block btn-default btn-md"
+                 })
+    }
+    
+    @Html.ActionLink(
+            "O projekcie",
+            "AboutProject",
+            "Projects",
+            null,
+            new
+            {
+                @class = "btn btn-block btn-default btn-md"
+            })
+</div>
