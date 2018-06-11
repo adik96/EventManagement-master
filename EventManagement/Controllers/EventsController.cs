@@ -165,7 +165,6 @@ namespace EventManagement.Controllers
             var user_event = new User_Event();
             user_event.UserId = userId;
             user_event.EventId = id;
-            //db.Events.Remove(@event);
             db.User_Event.Add(@user_event);
             db.SaveChanges();
             return RedirectToAction("MyEvents");

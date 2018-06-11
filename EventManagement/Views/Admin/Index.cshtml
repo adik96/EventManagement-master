@@ -1,0 +1,47 @@
+﻿@model IEnumerable<EventsManagement.Models.Event>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Autor")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.PelneNazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Dodaj uczestników", "AddIndex", new { id = item.Id }) |
+                @Html.ActionLink("Usuń uczestników", "DeleteIndex", new { id = item.Id }) |
+            </td>
+        </tr>
+    }
+
+</table>
