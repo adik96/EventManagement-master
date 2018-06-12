@@ -13,11 +13,35 @@ namespace EventManagement
     {
         protected void Application_Start()
         {
+            RouteTable.Routes.MapRoute("adminAddEvent",
+                "{controller}/{action}/{EventId}/{id}",
+                new
+                {
+                    controller = "Admin",
+                    action = "Include"
+                });
+            RouteTable.Routes.MapRoute("adminExitEvent",
+                "{controller}/{action}/{EventId}/{id}",
+                new
+                {
+                    controller = "Admin",
+                    action = "ExitEvent"
+                });
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
         }
+
+        private void RegisterRoutes(RouteTable routeTable, object routes)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }

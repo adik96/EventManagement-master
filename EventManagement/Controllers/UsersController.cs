@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventsManagement.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EventManagement.Controllers
 {
@@ -18,7 +19,8 @@ namespace EventManagement.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.OrganizationalUnit);
+            var userId = User.Identity.GetUserId();
+            var users = db.Users.Include(u => u.OrganizationalUnit).Where(m=>m.Id != userId);
             return View(users.ToList());
         }
 
@@ -37,30 +39,7 @@ namespace EventManagement.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public ActionResult Create()
-        {
-            ViewBag.OrganizationalUnitId = new SelectList(db.OrganizationalUnits, "Id", "Name");
-            return View();
-        }
-
-        // POST: Users/Create
-        // Aby zapewnić ochronę przed atakami polegającymi na przesyłaniu dodatkowych danych, włącz określone właściwości, z którymi chcesz utworzyć powiązania.
-        // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,OrganizationalUnitId,Name,PasswordHashed,Surname")] User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.OrganizationalUnitId = new SelectList(db.OrganizationalUnits, "Id", "Name", user.OrganizationalUnitId);
-            return View(user);
-        }
+        
 
         // GET: Users/Edit/5
         public ActionResult Edit(string id)
@@ -96,6 +75,7 @@ namespace EventManagement.Controllers
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -111,6 +91,7 @@ namespace EventManagement.Controllers
         }
 
         // POST: Users/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)

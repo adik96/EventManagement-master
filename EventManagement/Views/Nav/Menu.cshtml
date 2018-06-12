@@ -2,47 +2,60 @@
     <p><br /></p>
 
 
-        @Html.ActionLink(
-                           "Wszystkie wydarzenia",
-                           "Index",
-                           "Events",
-                           null,
-                           new
-                           {
-                               @class = "btn btn-block btn-default btn-md"
-                           })
+    @Html.ActionLink(
+                            "Wszystkie wydarzenia",
+                            "Index",
+                            "Events",
+                            null,
+                            new
+                            {
+                                @class = "btn btn-block btn-default btn-md"
+                            })
     @if (Request.IsAuthenticated)
     {
         @Html.ActionLink(
-                           "Moje wydarzenia",
-                           "MyEvents",
-                           "Events",
-                           null,
-                           new
-                           {
-                               @class = "btn btn-block btn-default btn-md"
-                           })
+                                "Moje wydarzenia",
+                                "MyEvents",
+                                "Events",
+                                null,
+                                new
+                                {
+                                    @class = "btn btn-block btn-default btn-md"
+                                })
     }
     @if (Request.IsAuthenticated && User.IsInRole("admin"))
     {
         @Html.ActionLink(
-                           "Zarządzaj uczestnikami wydarzeń",
-                           "Index",
-                           "Admin",
-                           null,
-                           new
-                           {
-                               @class = "btn btn-block btn-default btn-md"
-                           })
+                                "Zarządzaj uczestnikami wydarzeń",
+                                "Index",
+                                "Admin",
+                                null,
+                                new
+                                {
+                                    @class = "btn btn-block btn-default btn-md"
+                                })
+    }
+
+    @if (Request.IsAuthenticated && User.IsInRole("admin"))
+    {
+        @Html.ActionLink(
+                                "Usuń użytkowników",
+                                "Index",
+                                "Users",
+                                null,
+                                new
+                                {
+                                    @class = "btn btn-block btn-default btn-md"
+                                })
     }
 
     @Html.ActionLink(
-                    "O projekcie",
-                    "AboutProject",
-                    "Projects",
-                    null,
-                    new
-                    {
-                        @class = "btn btn-block btn-default btn-md"
-                    })
+                        "O projekcie",
+                        "AboutProject",
+                        "Projects",
+                        null,
+                        new
+                        {
+                            @class = "btn btn-block btn-default btn-md"
+                        })
 </div>

@@ -1,0 +1,73 @@
+﻿@model EventsManagement.Models.Event
+
+@{
+    ViewBag.Title = "Anuluj uczestnictwo";
+}
+
+<h2>Anuluj uczestnictwo</h2>
+
+<h3>Czy chcesz anulować uczestnictwo tego użytkownika?</h3>
+<div>
+    <h4>Wydarzenie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Place)
+        </dt>       
+
+        <dd>
+            @Html.DisplayFor(model => model.Place)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventTime)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Anuluj uczestnictwo" class="btn btn-default" /> |
+            @Html.ActionLink("Wróć", "Index")
+        </div>
+    }
+</div>

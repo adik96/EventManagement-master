@@ -28,17 +28,17 @@ namespace EventManagement.Controllers
         public ActionResult AddIndex(int? id)   ///// id - EVENT ID /////////////
         {
             var users = db.Users.Include(u => u.OrganizationalUnit);
-            var takePart = db.User_Event.Where(m => m.EventId == id).Select(m => m.UserId).ToList();
+            var takePart = db.User_Event.Where(m => m.EventId == id).Select(m => m.UserId).ToArray();
 
-            ViewData["takePart"] = takePart;
-            TempData["Event_ID"] = id;
+            ViewData["takePart"] = takePart;  ////////take part USERS ID
+            TempData["Event_ID"] = id;  
             //TempData["Event_ID"] = id;
             //return View(users.ToList());
             //List<object[]> list = new List<object[]> { new object[] { users, takePart, Event_id } };
             return View(users.ToList());
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public ActionResult Add(string id)
         {
 
@@ -66,7 +66,7 @@ namespace EventManagement.Controllers
            // var eventId = TempData["Event_ID"].ToString();
             var user_event = new User_Event();
             user_event.UserId = id;
-            user_event.EventId = (int)TempData["Event_ID"];
+            //user_event.EventId = (int)TempData["Event_ID"];
             db.User_Event.Add(@user_event);
             db.SaveChanges();
             return RedirectToAction("AddIndex", "Admin");
@@ -116,28 +116,6 @@ namespace EventManagement.Controllers
             return View(@event);
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Admin/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         // GET: Admin/Edit/5
         public ActionResult Edit(int id)
         {
@@ -160,26 +138,65 @@ namespace EventManagement.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        [Authorize(Roles = "admin")]
+        [Route("Admin/Include/{EventId}/{id}")]
+        public ActionResult Include(int EventId, string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Event @event = db.Events.Include(m => m.State).Where(x => x.Id == EventId).First();
+            if (@event == null)
+            {
+                return HttpNotFound();
+            }
+            return View(@event);
         }
 
-        // POST: Admin/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // POST: Events/Include/5
+        [Authorize(Roles = "admin")]
+        [HttpPost, ActionName("Include")]
+        [ValidateAntiForgeryToken]
+        [Route("Admin/Include/{EventId}/{id}")]
+        public ActionResult IncludeConfirmed(int EventId, string id)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var user_event = new User_Event();
+            user_event.UserId = id;
+            user_event.EventId = EventId;
+            db.User_Event.Add(@user_event);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "admin")]
+        [Route("Admin/ExitEvent/{EventId}/{id}")]
+        public ActionResult ExitEvent(int EventId, string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Event @event = db.Events.Include(m => m.State).Where(x => x.Id == EventId).First();
+            if (@event == null)
+            {
+                return HttpNotFound();
+            }
+            return View(@event);
+        }
+
+        // POST: Events/Exit/5
+        [Authorize(Roles = "admin")]
+        [Route("Admin/ExitEvent/{EventId}/{id}")]
+        [HttpPost, ActionName("ExitEvent")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ExitEventConfirmed(int EventId, string id)
+        {
+            User_Event @user_event = db.User_Event.Where(m => m.EventId == EventId).Where(x => x.UserId == id).First();
+            db.User_Event.Remove(@user_event);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
     }
 }

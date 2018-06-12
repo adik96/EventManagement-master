@@ -30,8 +30,29 @@
                 @Html.DisplayFor(modelItem => item.OrganizationalUnit.Name)
             </td>
             <td>
-                @Html.ActionLink("Dodaj uczestnika", "Add", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @{
+        var flag = false;
+        int eventID;
+        foreach (var element in ViewData["takePart"] as Array)
+        {
+            if (item.Id.ToString() == element.ToString()) { flag = true; }
+            //eventID = (int)element;
+        }
+        if (Request.IsAuthenticated)
+        {
+            if (flag) /////////////////////////musze miec id projektu i usera do usuniecia i dodania
+            {
+                @Html.ActionLink("Anuluj uczestnoictwo", "ExitEvent", new { EventId = (int)TempData["Event_ID"], id = item.Id })}
+            else
+            {
+                   @Html.ActionLink("Dołącz", "adminAdd", new { EventId = (int)TempData["Event_ID"], id = item.Id })
+                   @Html.ActionLink("Dołącz2",
+                   "Include",
+                   new { EventId = (int)TempData["Event_ID"], id = item.Id })
+            }
+        }
+                }
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
             </td>
         </tr>
     }
