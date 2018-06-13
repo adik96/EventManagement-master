@@ -4,8 +4,8 @@
 }
 
 
-<h2>Uczestnicy wydarzenia " @ViewBag.EventName "</h2>
-
+<h2>Dodaj/usuń uczestników wydarzenia "@ViewBag.EventName":</h2>
+<br/>
 <p>
 
 </p>
@@ -41,16 +41,16 @@
         {
             if (flag)
             {
-                @Html.ActionLink("Anuluj uczestnoictwo", "ExitEvent", new { EventId = (int)TempData["Event_ID"], id = item.Id }) |}
+                @Html.ActionLink("Anuluj uczestnoictwo", "ExitEvent", new { EventId = (int)TempData["Event_ID"], id = item.Id }, new { @class = "btn btn-primary" }) }
             else
             {
                    @Html.ActionLink("Dołącz",
                    "Include",
-                   new { EventId = (int)TempData["Event_ID"], id = item.Id } |)
+                   new { EventId = (int)TempData["Event_ID"], id = item.Id }, new { @class = "btn btn-primary" })
             }
         }
                 }
-                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id })
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
             </td>
         </tr>
     }

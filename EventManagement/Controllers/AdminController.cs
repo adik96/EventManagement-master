@@ -31,7 +31,7 @@ namespace EventManagement.Controllers
 
             ViewData["takePart"] = takePart;
             TempData["Event_ID"] = id;
-            ViewBag.EventName = db.Events.Where(m => m.Id == id).First();
+            ViewBag.EventName = db.Events.Where(m => m.Id == id).First().Title;
             return View(users.ToList());
         }
 

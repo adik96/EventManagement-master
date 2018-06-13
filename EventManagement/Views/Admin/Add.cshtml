@@ -4,7 +4,7 @@
     ViewBag.Title = "Dodaj użytkownika";
 }
 
-<h2>Delete</h2>
+<h2>Add</h2>
 
 <h3>Chcessz dodać tego użytkownika do wydarzenia?</h3>
 <div>
@@ -42,8 +42,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Add" class="btn btn-default" /> |
-            @Html.ActionLink("Wróć", "Index")
+            <input type="submit" value="Add" class="btn btn-primary" /> |
+            @Html.ActionLink("Wróć", "Index", new { @class = "btn btn-primary" })
         </div>
     }
 </div>

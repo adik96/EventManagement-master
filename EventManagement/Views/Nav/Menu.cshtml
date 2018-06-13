@@ -3,49 +3,59 @@
 
 
     @Html.ActionLink(
-                            "Wszystkie wydarzenia",
-                            "Index",
-                            "Events",
-                            null,
-                            new
-                            {
-                                @class = "btn btn-block btn-default btn-md"
-                            })
+                                    "Wszystkie wydarzenia",
+                                    "Index",
+                                    "Events",
+                                    null,
+                                    new
+                                    {
+                                        @class = "btn btn-block btn-primary btn-md"
+                                    })
     @if (Request.IsAuthenticated)
     {
         @Html.ActionLink(
-                                "Moje wydarzenia",
-                                "MyEvents",
-                                "Events",
-                                null,
-                                new
-                                {
-                                    @class = "btn btn-block btn-default btn-md"
-                                })
+                                          "Moje wydarzenia",
+                                          "MyEvents",
+                                          "Events",
+                                          null,
+                                          new
+                                          {
+                                              @class = "btn btn-block btn-primary btn-md"
+                                          })
     }
     @if (Request.IsAuthenticated && User.IsInRole("admin"))
     {
         @Html.ActionLink(
-                                "Zarządzaj uczestnikami wydarzeń",
-                                "Index",
-                                "Admin",
-                                null,
-                                new
-                                {
-                                    @class = "btn btn-block btn-default btn-md"
-                                })
+                                          "Zarządzaj uczestnikami wydarzeń",
+                                          "Index",
+                                          "Admin",
+                                          null,
+                                          new
+                                          {
+                                              @class = "btn btn-block btn-primary btn-md"
+                                          })
     }
 
     @if (Request.IsAuthenticated && User.IsInRole("admin"))
     {
         @Html.ActionLink(
-                                "Usuń użytkowników",
-                                "Index",
-                                "Users",
-                                null,
-                                new
-                                {
-                                    @class = "btn btn-block btn-default btn-md"
-                                })
+                                          "Usuń użytkowników",
+                                          "Index",
+                                          "Users",
+                                          null,
+                                          new
+                                          {
+                                              @class = "btn btn-block btn-primary btn-md"
+                                          })
     }
+
+    @Html.ActionLink(
+                                         "Edytuj swoje dane",
+                                         "Edit",
+                                         "Users",
+                                         null,
+                                         new
+                                         {
+                                             @class = "btn btn-block btn-primary btn-md"
+                                         })
 </div>
