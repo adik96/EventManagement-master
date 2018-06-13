@@ -27,7 +27,7 @@ namespace EventManagement
                     controller = "Admin",
                     action = "ExitEvent"
                 });
-
+            
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EventManagement.Models;
-using EventManagement.Views.Events;
 //using EventManagement.Views.Events;
 using EventsManagement.Models;
 using Microsoft.AspNet.Identity;
@@ -46,7 +45,8 @@ namespace EventManagement.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "Email");
+
+            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "Email");
             ViewBag.StateId = new SelectList(db.States, "Id", "Name");
             return View();
         }
@@ -61,6 +61,9 @@ namespace EventManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                var authorId = User.Identity.GetUserId();
+                @event.AuthorId = authorId;
+                @event.EventAdd = DateTime.Now;
                 db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -167,7 +170,7 @@ namespace EventManagement.Controllers
             user_event.EventId = id;
             db.User_Event.Add(@user_event);
             db.SaveChanges();
-            return RedirectToAction("MyEvents");
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -196,7 +199,7 @@ namespace EventManagement.Controllers
             User_Event @user_event = db.User_Event.Where(m => m.EventId == id).First();
             db.User_Event.Remove(@user_event);
             db.SaveChanges();
-            return RedirectToAction("MyEvents");
+            return RedirectToAction("Index");
         }
 
         [Authorize]
@@ -219,33 +222,23 @@ namespace EventManagement.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Event @event = db.Events.Include(m => m.Author).Include(m => m.State).Where(m => m.Id == id).First();
-            var evDetails = new EventDetailsViewModel();
-            //evDetails.Participants = db.Users.Join(db.User_Event, m => m.Id == s => s.)
-            evDetails.AuthorId = @event.AuthorId;
-            evDetails.Title = @event.Title;
-            evDetails.Description = @event.Description;
-            evDetails.Place = @event.Place;
-            evDetails.EventDate = @event.EventDate;
-            evDetails.EventTime = @event.EventTime;
-            evDetails.EventAdd = @event.EventAdd;
-            evDetails.StateId = @event.StateId;
             var x = from user in db.Users
-                                       join user_event in db.User_Event 
-                                       on user.Id equals user_event.UserId
-                                       where id == user_event.EventId
-                                       select user;
-            List<String> primes = new List<String>();
+                    join user_event in db.User_Event
+                    on user.Id equals user_event.UserId
+                    where id == user_event.EventId
+                    select user;
+            List<String> participating = new List<String>();
             if (x.Any())
             {
                 foreach (var item in x)
                 {
-                    primes.Add(item.PelneNazwisko);
+                    participating.Add(item.PelneNazwisko);
                 }
             }
             else
-                primes.Add("Brak uczestników, dołącz jako pierwszy!");
+                participating.Add("Brak uczestników, dołącz jako pierwszy!");
 
-            ViewData["Participants"] = primes;
+            ViewData["participating"] = participating;
 
             if (@event == null)
             {

@@ -25,6 +25,7 @@ namespace EventManagement.Controllers
         }
 
         // GET: Users/Details/5
+        [Authorize]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -42,8 +43,10 @@ namespace EventManagement.Controllers
         
 
         // GET: Users/Edit/5
-        public ActionResult Edit(string id)
+        [Authorize]
+        public ActionResult Edit()
         {
+            var id = User.Identity.GetUserId();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -60,15 +63,17 @@ namespace EventManagement.Controllers
         // POST: Users/Edit/5
         // Aby zapewnić ochronę przed atakami polegającymi na przesyłaniu dodatkowych danych, włącz określone właściwości, z którymi chcesz utworzyć powiązania.
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName,OrganizationalUnitId,Name,PasswordHashed,Surname")] User user)
         {
             if (ModelState.IsValid)
             {
+                user.UserName = user.Email;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.OrganizationalUnitId = new SelectList(db.OrganizationalUnits, "Id", "Name", user.OrganizationalUnitId);
             return View(user);
@@ -82,7 +87,7 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            User user = db.Users.Where(m=>m.Id == id).Include(m=>m.OrganizationalUnit).First();
             if (user == null)
             {
                 return HttpNotFound();

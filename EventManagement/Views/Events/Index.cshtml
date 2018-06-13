@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EventsManagement.Models.Event>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista wydarzeń";
 }
 
-<h2>Index</h2>
+<h2>Lista wydarzeń</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Stwórz nowe wydarzenie", "Create")
 </p>
 <table class="table">
     <tr>
@@ -36,10 +36,10 @@
         </td>
         <td>
             @if (Request.IsAuthenticated && User.IsInRole("admin")) {
-            @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }) }|
-            @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Edytuj", "Edit", new { id = item.Id }, new { @class = "btn btn-warning" })}
+            @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" }) 
             @if (Request.IsAuthenticated && User.IsInRole("admin")) {
-            @Html.ActionLink("Usuń", "Delete", new { id = item.Id })} |
+            @Html.ActionLink("Usuń", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger" })} 
             @if (Request.IsAuthenticated)
     {
         @Html.ActionLink("Dołącz", "Include", new { id = item.Id })

@@ -1,10 +1,10 @@
 ﻿@model EventsManagement.Models.Event
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Stwórz";
 }
 
-<h2>Create</h2>
+<h2>Podaj dane wydarzenia:</h2>
 
 
 @using (Html.BeginForm()) 
@@ -56,23 +56,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EventAdd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventAdd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventAdd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AuthorId, "AuthorId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("AuthorId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AuthorId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StateId, "StateId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StateId, "Stan", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("StateId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
@@ -81,14 +65,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Stwórz" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Wróć", "Index")
 </div>
 
 @section Scripts {
