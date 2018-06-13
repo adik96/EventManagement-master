@@ -30,6 +30,7 @@
                 @Html.DisplayFor(modelItem => item.OrganizationalUnit.Name)
             </td>
             <td>
+                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
                 @{
         var flag = false;
         int eventID;
@@ -44,13 +45,13 @@
                 @Html.ActionLink("Anuluj uczestnoictwo", "ExitEvent", new { EventId = (int)TempData["Event_ID"], id = item.Id }, new { @class = "btn btn-primary" }) }
             else
             {
-                   @Html.ActionLink("Dołącz",
-                   "Include",
-                   new { EventId = (int)TempData["Event_ID"], id = item.Id }, new { @class = "btn btn-primary" })
+                 @Html.ActionLink("Dodaj uczestnika",
+                 "Include",
+                 new { EventId = (int)TempData["Event_ID"], id = item.Id }, new { @class = "btn btn-primary" })
             }
-        }
+            }
                 }
-                @Html.ActionLink("Szczegóły", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+
             </td>
         </tr>
     }

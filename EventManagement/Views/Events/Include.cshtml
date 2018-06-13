@@ -4,11 +4,11 @@
     ViewBag.Title = "Dołącz";
 }
 
-<h2>Dołącz</h2>
+<h2></h2>
 
 <h3>Czy chcesz dołączyć do tego wydarzenia?</h3>
 <div>
-    <h4>Wydarzenie</h4>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -66,8 +66,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Dołącz" class="btn btn-primary" /> |
-            @Html.ActionLink("Wróć", "Index", new { @class = "btn btn-primary" })
+            <input type="submit" value="Dołącz" class="btn btn-primary" /> 
+            @Html.ActionLink("Wróć", "Index",null, new { @class = "btn btn-primary" })
         </div>
     }
 </div>

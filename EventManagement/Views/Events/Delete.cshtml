@@ -8,15 +8,15 @@
 
 <h3>Usunąć wydarzenie?</h3>
 <div>
-    <h4>Wydarzenie:</h4>
+    <h4></h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Author.Email)
+            @Html.DisplayNameFor(model => model.Author.PelneNazwisko)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Author.Email)
+            @Html.DisplayFor(model => model.Author.PelneNazwisko)
         </dd>
 
         <dt>
@@ -81,8 +81,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Usuń" class="btn btn-danger" /> |
-            @Html.ActionLink("Wróć", "Index", new { @class = "btn btn-primary" })
+            <input type="submit" value="Usuń" class="btn btn-danger" /> 
+            @Html.ActionLink("Wróć", "Index",null, new { @class = "btn btn-primary" })
         </div>
     }
 </div>

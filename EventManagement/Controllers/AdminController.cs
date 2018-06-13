@@ -133,6 +133,7 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Nazwa = db.Users.Find(id).PelneNazwisko;
             Event @event = db.Events.Include(m => m.State).Where(x => x.Id == EventId).First();
             if (@event == null)
             {
@@ -164,6 +165,7 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.Nazwa = db.Users.Find(id).PelneNazwisko;
             Event @event = db.Events.Include(m => m.State).Where(x => x.Id == EventId).First();
             if (@event == null)
             {

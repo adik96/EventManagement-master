@@ -20,7 +20,10 @@ namespace EventManagement.Controllers
         // GET: Events
         public ActionResult Index()
         {
+            var userId = User.Identity.GetUserId();
             var events = db.Events.Include(m => m.Author).Include(m => m.State);
+            var takePart = db.User_Event.Where(m => m.UserId == userId).Select(m => m.EventId);
+            ViewData["takePart"] = takePart.ToArray();
             return View(events.ToList());
         }
 
@@ -119,7 +122,8 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Event @event = db.Events.Find(id);
+            //Event @event = db.Events.Find(id);
+            Event @event = db.Events.Include(m => m.Author).Include(m => m.State).Where(m => m.Id == id).First();
             if (@event == null)
             {
                 return HttpNotFound();
