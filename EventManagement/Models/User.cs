@@ -34,7 +34,6 @@ namespace EventsManagement.Models
 
         [InverseProperty("Author")]
         public ICollection<Event> CreateEvents { get; private set; }
-        //[InverseProperty("Assigned")]
         public ICollection<User_Event> User_Event { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
@@ -42,7 +41,6 @@ namespace EventsManagement.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
-            userIdentity.AddClaim(new Claim("PelneNazwisko", this.PelneNazwisko));
             return userIdentity;
         }
 

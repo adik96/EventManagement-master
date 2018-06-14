@@ -4,10 +4,8 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using EventManagement.Models;
-//using EventManagement.Views.Events;
 using EventsManagement.Models;
 using Microsoft.AspNet.Identity;
 
@@ -27,29 +25,11 @@ namespace EventManagement.Controllers
             return View(events.ToList());
         }
 
-        // GET: Events/Details/5
-        /*public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event @event = db.Events.Include(m => m.Author).Include(m => m.State).Where(x => x.Id == id).First();
-            //string x = id.ToString();
-            //@event = db.Events.Include(m => m.Author).Include(m => m.State);
-            if (@event == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@event);
-        }*/
 
         // GET: Events/Create
         [Authorize]
         public ActionResult Create()
         {
-
-            //ViewBag.AuthorId = new SelectList(db.Users, "Id", "Email");
             ViewBag.StateId = new SelectList(db.States, "Id", "Name");
             return View();
         }
@@ -143,7 +123,7 @@ namespace EventManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        // kome ///////////////////////////////////////////////////////////////////////////////////////////// take part in event
+
         [Authorize]
         public ActionResult Include(int? id)
         {
@@ -151,7 +131,6 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Event @event = db.Events.Find(id);
             Event @event = db.Events.Include(m => m.State).Where(x => x.Id == id).First();
             if (@event == null)
             {
@@ -184,7 +163,6 @@ namespace EventManagement.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Event @event = db.Events.Find(id);
             Event @event = db.Events.Include(m => m.State).Where(x => x.Id == id).First();
             if (@event == null)
             {

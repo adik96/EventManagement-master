@@ -43,8 +43,6 @@ namespace EventsManagement.Models
         [Display(Name = "Data dodania")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
-        //[Editable(false, AllowInitialValue = true)]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime EventAdd { get; set; }
 
         [ForeignKey("Author")]
@@ -58,12 +56,7 @@ namespace EventsManagement.Models
 
         [Display(Name = "Stan")]
         public State State { get; set; }
-        /*
-                [Display(Name = "Uczestnik")]
-                public User Assignee { get; set; }
-        */
-        //[InverseProperty("Event")]
-        //public ICollection<User> Assignee { get; set; }
+        
         [Display(Name = "Uczestnicy")]
         public virtual ICollection<User_Event> User_Event { get; set; }
         

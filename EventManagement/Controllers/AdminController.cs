@@ -35,39 +35,6 @@ namespace EventManagement.Controllers
             return View(users.ToList());
         }
 
-        [Authorize(Roles = "admin")]
-        public ActionResult Add(string id)
-        {
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User @user = db.Users.Include(u => u.OrganizationalUnit).Where(x => x.Id == id).First();
-            //string a = "sdad";
-            //var x = db.Users.Where(m => m.Name.Contains(a));
-            if (@user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(@user);
-        }
-
-        // POST: Events/Add/5
-        [Authorize]
-        [HttpPost, ActionName("Add")]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddConfirmed(string id)
-        {
-            User @user = db.Users.Find(id);
-           // var eventId = TempData["Event_ID"].ToString();
-            var user_event = new User_Event();
-            user_event.UserId = id;
-            //user_event.EventId = (int)TempData["Event_ID"];
-            db.User_Event.Add(@user_event);
-            db.SaveChanges();
-            return RedirectToAction("AddIndex", "Admin");
-        }
 
         // GET: Admin/Details/5
         public ActionResult Details(int? id)
@@ -99,7 +66,6 @@ namespace EventManagement.Controllers
             {
                 return HttpNotFound();
             }
-            //return Content(text);
             return View(@event);
         }
 

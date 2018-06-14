@@ -24,22 +24,6 @@ namespace EventManagement.Controllers
             return View(users.ToList());
         }
 
-        // GET: Users/Details/5
-        [Authorize]
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
-        }
-
         
 
         // GET: Users/Edit/5
