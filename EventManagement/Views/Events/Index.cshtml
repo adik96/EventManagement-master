@@ -5,8 +5,11 @@
 }
 @if (Model == null || !Model.Any())
 {
-    <h2>Lista moich wydarzeń</h2>
-    @Html.ActionLink("Stwórz nowe wydarzenie", "Create", null, new { @class = "btn btn-primary" })
+    <h2>Lista wydarzeń</h2>
+    if(Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Stwórz nowe wydarzenie", "Create", null, new { @class = "btn btn-primary" });
+    }
     <h2 class="text-center">Brak wydarzeń</h2>
 }
 else
@@ -14,7 +17,10 @@ else
     <h2>Lista wydarzeń</h2>
 
     <p>
-        @Html.ActionLink("Stwórz nowe wydarzenie", "Create", null, new { @class = "btn btn-primary" })
+    @if(Request.IsAuthenticated)
+     {
+        @Html.ActionLink("Stwórz nowe wydarzenie", "Create", null, new { @class = "btn btn-primary" });
+     }
     </p>
     <table class="table">
         <tr>
