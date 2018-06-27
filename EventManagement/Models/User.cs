@@ -36,6 +36,7 @@ namespace EventsManagement.Models
         public ICollection<Event> CreateEvents { get; private set; }
         public ICollection<User_Event> User_Event { get; set; }
 
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

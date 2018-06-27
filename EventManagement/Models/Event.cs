@@ -60,5 +60,5 @@ namespace EventsManagement.Models
         [Display(Name = "Uczestnicy")]
         public virtual ICollection<User_Event> User_Event { get; set; }
         
-}
+    }
 }

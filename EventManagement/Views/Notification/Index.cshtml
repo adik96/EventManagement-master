@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EventsManagement.Models.Event>
+
+@{
+    ViewBag.Title = "Powiadomienia";
+}
+
+@{
+    <h2>Powiadomienia</h2>
+
+    <p>
+        
+    </p>
+    <table class="table">
+        
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="alert alert-danger">
+                    Masz nadchodzące wydarzennie! Nie zapomnij o tym!( <a href="@Url.Action("Details", "Events", new { id = item.Id })" class="alert-link">@Html.DisplayFor(modelItem => item.Title)</a> )
+                    
+                </td>
+                
+            </tr>
+        }
+
+    </table>
+}
