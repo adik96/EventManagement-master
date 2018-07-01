@@ -13,6 +13,7 @@ namespace EventsManagement.Models
         public Event()
         {
             this.User_Event = new HashSet<User_Event>();
+            this.NtfHide = new HashSet<NtfHide>();
         }
         
 
@@ -60,5 +61,6 @@ namespace EventsManagement.Models
         [Display(Name = "Uczestnicy")]
         public virtual ICollection<User_Event> User_Event { get; set; }
         
+        public virtual ICollection<NtfHide> NtfHide { get; set; }
     }
 }

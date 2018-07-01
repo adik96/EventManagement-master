@@ -1,0 +1,33 @@
+﻿@model EventsManagement.Models.Event
+
+@{
+    ViewBag.Title = "Ukryć powiadomienie?";
+}
+
+<h2>Ukryć powiadomienie o wydarzeniu <b>@Html.DisplayFor(m => m.Title) ?</b></h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+    
+        <hr />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ukryj" class="btn btn-danger btn-lg btn-block" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Wróć", "Index", null, new { @class = "btn btn-primary" })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

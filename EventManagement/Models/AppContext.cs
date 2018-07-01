@@ -24,6 +24,7 @@ namespace EventsManagement.Models
         public DbSet<OrganizationalUnit> OrganizationalUnits { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<User_Event> User_Event { get; set; }
+        public DbSet<NtfHide> NtfHides { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {

@@ -3,26 +3,34 @@
 @{
     ViewBag.Title = "Powiadomienia";
 }
-
-@{
+@if (Model == null || !Model.Any())
+{
     <h2>Powiadomienia</h2>
-
-    <p>
-        
-    </p>
-    <table class="table">
-        
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="alert alert-danger">
-                    Masz nadchodzące wydarzennie! Nie zapomnij o tym!( <a href="@Url.Action("Details", "Events", new { id = item.Id })" class="alert-link">@Html.DisplayFor(modelItem => item.Title)</a> )
-                    
-                </td>
-                
-            </tr>
-        }
-
-    </table>
+    <h2 class="text-center">Nie masz żadnych powiadomień!</h2>
 }
+else
+
+    {
+        <h2>Powiadomienia</h2>
+
+        <p>
+
+        </p>
+        <table class="table">
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="alert alert-danger">
+                        Masz nadchodzące wydarzenie - <a href="@Url.Action("Details", "Events", new { id = item.Id })" class="alert-link">@Html.DisplayFor(modelItem => item.Title)</a>. Nie zapomnij o tym!
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Ukryj", "Hide", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }

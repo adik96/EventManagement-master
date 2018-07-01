@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity.SqlServer;
 using System.Data.Entity;
+using EventManagement.Models;
+using EventsManagement.Models;
 
 namespace EventManagement.Controllers
 {
@@ -17,16 +19,16 @@ namespace EventManagement.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var ntf = from ev in db.Events
+            var all_ev_ntf = from ev in db.Events
                            join ue in db.User_Event on ev.Id equals ue.EventId
-                           //where userId == ue.UserId && ev.EventDate.Subtract(DateTime.Now).TotalDays < 2
-                           //where userId == ue.UserId && (int)SqlFunctions.DiffDays("dd", ev.EventDate, DateTime.Now) <= 2 //&& (int)SqlFunctions.DateDiff("hour", ev.EventDate, DateTime.Now) >=0
-                           //where userId == ue.UserId && ev.EventDate.CompareTo(now)
-                           //where userId == ue.UserId && DbFunctions.DiffDays(ev.EventDate, DateTime.Now) <= 2
-                           where userId == ue.UserId && DbFunctions.DiffDays(DateTime.Now, ev.EventDate) <= 2 && DbFunctions.DiffDays(DateTime.Now, ev.EventDate) >=0
-                           select ev;
+                           where userId == ue.UserId && DbFunctions.DiffDays(DateTime.Now, ev.EventDate) <= 2 && DbFunctions.DiffDays(DateTime.Now, ev.EventDate) >=0 //&& userId != n.UserId
+                      select ev;
+            var ntf_hide_user = db.NtfHides.Where(q => q.UserId == userId);
+            var wynik = all_ev_ntf.Where(a => !ntf_hide_user.Any(h => a.Id.ToString().Contains(h.EventId.ToString())));
 
-            return View(ntf);
+            //var test2NotInTest1 = test2.Where(t2 => !test1.Any(t1 => t2.Contains(t1)));
+
+            return View(wynik);
         }
 
         // GET: Notification/Details/5
@@ -57,26 +59,25 @@ namespace EventManagement.Controllers
             }
         }
 
-        // GET: Notification/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Notification/Hide/5
+        public ActionResult Hide(int id)
         {
-            return View();
+            var x = db.Events.Find(id);
+            return View(x);
         }
 
-        // POST: Notification/Edit/5
+        // POST: Notification/Hide/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        public ActionResult Hide(int id, NtfHide @ntf)
         {
-            try
-            {
-                // TODO: Add update logic here
+            @ntf.EventId = id;
+            @ntf.UserId = User.Identity.GetUserId();
+            db.NtfHides.Add(@ntf);
+            db.SaveChanges();
+            return RedirectToAction("Index");
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: Notification/Delete/5
